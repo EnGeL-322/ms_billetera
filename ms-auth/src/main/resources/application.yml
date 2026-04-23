@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ms-auth-service
+  profiles:
+    active: development
+  config:
+    import: optional:configserver:http://root:123456@localhost:7010
+
+secret: secret

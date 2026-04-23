@@ -1,0 +1,54 @@
+<mat-card class="wallet-card">
+
+  <!-- ENCABEZADO -->
+  <div class="wallet-header">
+    <div>
+      <h2>Billetera Digital</h2>
+
+    </div>
+
+    <button mat-fab color="primary" class="create-button" (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <!-- RESUMEN DE WALLET -->
+  <div class="wallet-summary" *ngIf="wallet">
+    <div class="wallet-icon">💰</div>
+
+    <div class="wallet-info">
+      <h3>Balance total</h3>
+      <h1 class="balance">PEN {{ wallet.balance | number:'1.2-2' }}</h1>
+
+      <p class="currency">Moneda: {{ wallet.currency | uppercase }}</p>
+      <p class="created">Creada el: {{ wallet.createdAt | date:'medium' }}</p>
+    </div>
+  </div>
+
+  <!-- BANCOS CONECTADOS -->
+  <div class="banks-title">
+    <h3>Bancos conectados</h3>
+  </div>
+
+  <div class="banks-list">
+    <button
+      class="bank-tag"
+      *ngFor="let b of banks"
+      mat-stroked-button
+      color="primary"
+      (click)="goToBank(b.id)">
+      {{ b.name }}
+    </button>
+  </div>
+
+  <p *ngIf="banks.length === 0" class="no-banks">No hay bancos registrados.</p>
+
+  <!-- BOTÓN ELIMINAR -->
+  <div class="delete-container" *ngIf="wallet">
+    <button mat-stroked-button color="warn" (click)="deleteWallet()">
+      <mat-icon>delete</mat-icon>
+      Eliminar Billetera
+    </button>
+  </div>
+
+</mat-card>

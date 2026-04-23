@@ -1,0 +1,73 @@
+server:
+  port: 9020
+
+spring:
+  application:
+    name: ms-gateway-server
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+        - id: ms-categories-service
+          uri: lb://ms-categories-service
+          predicates:
+            - Path=/categories/**
+          filters:
+            - name: AuthFilter
+
+        - id: ms-goals-service
+          uri: lb://ms-goals-service
+          predicates:
+            - Path=/goals/**
+          filters:
+            - name: AuthFilter
+
+        - id: ms-wallet-service
+          uri: lb://ms-wallet-service
+          predicates:
+            - Path=/transactions/**, /wallets/** , /bancos/** ,/bank-ops/**
+
+          filters:
+            - name: AuthFilter
+
+        - id: ms-events-service
+          uri: lb://ms-events-service
+          predicates:
+            - Path=/events/**
+          filters:
+            - name: AuthFilter
+
+        - id: ms-auth-service
+          uri: lb://ms-auth-service 
+          predicates:
+            - Path=/auth/**
+          filters: []
+
+
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - PATCH
+            allowedHeaders: "*"
+            allowCredentials: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8010/eureka}
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

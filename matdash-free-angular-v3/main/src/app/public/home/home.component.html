@@ -1,0 +1,83 @@
+<div class="hero-wrapper">
+
+  <!-- NAVBAR SUPERIOR -->
+  <header class="navbar">
+    <div class="logo">Billetera<span>Digital</span></div>
+
+    <div class="nav-buttons">
+      <button mat-stroked-button color="primary" (click)="goLogin()">
+        Iniciar Sesión
+      </button>
+      <button mat-flat-button color="primary" (click)="goRegister()">
+        Crear Cuenta
+      </button>
+    </div>
+  </header>
+
+
+  <!-- HERO PRINCIPAL -->
+  <section class="hero">
+
+    <div class="hero-text animate-fade">
+      <h1>Control total de tu dinero,
+        <span>fácil y seguro</span>
+      </h1>
+
+      <p>
+        Administra tus gastos, objetivos, eventos y transacciones
+        desde una plataforma diseñada para ayudarte a crecer.
+      </p>
+
+      <button mat-flat-button color="accent" class="cta" (click)="goRegister()">
+        Comenzar ahora 🚀
+      </button>
+    </div>
+
+    <div class="hero-img animate-slide">
+      <img src="https://i.ibb.co/qWCgZ3Y/fintech-gradient.png" alt="Fintech UI" />
+    </div>
+
+  </section>
+</div>
+
+
+
+<!-- SECCIÓN DE BENEFICIOS -->
+<section class="features">
+
+  <div class="feature-card animate-up">
+    <span class="icon">💳</span>
+    <h3>Billetera inteligente</h3>
+    <p>Controla ingresos, gastos y saldos en tiempo real.</p>
+  </div>
+
+  <div class="feature-card animate-up">
+    <span class="icon">📈</span>
+    <h3>Metas de ahorro</h3>
+    <p>Define objetivos y mira tu progreso día a día.</p>
+  </div>
+
+  <div class="feature-card animate-up">
+    <span class="icon">🔥</span>
+    <h3>Eventos y planificación</h3>
+    <p>Reserva dinero para viajes, proyectos y emergencias.</p>
+  </div>
+
+</section>
+
+
+
+<!-- CTA FINAL SUPER ELEGANTE -->
+<section class="cta-final">
+  <h2>Empieza a construir tu futuro financiero hoy</h2>
+  <button mat-flat-button color="primary" class="btn-big" (click)="goRegister()">
+    Crear mi cuenta ahora
+  </button>
+</section>
+
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2025 BilleteraDigital — Todos los derechos reservados.</p>
+</footer>

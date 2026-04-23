@@ -1,0 +1,160 @@
+/* ================================ */
+/*       HEADER WRAPPER            */
+/* ================================ */
+:root {
+  --header-bg: #ffffff;           /* fondo blanco */
+  --header-text: #333;
+  --header-shadow: rgba(0,0,0,0.06);
+}
+
+.header-container {
+  width: 100%;
+  height: 64px;
+  background: var(--header-bg, #6a44d5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ================================ */
+/*            LEFT SIDE             */
+/* ================================ */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggle-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-button mat-icon {
+  font-size: 28px;
+  color: #4c4c4c;
+}
+
+/* ================================ */
+/*            TITLE / LOGO          */
+/* ================================ */
+.header-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.header-logo {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.header-logo img {
+  height: 32px;
+}
+
+/* ================================ */
+/*           RIGHT SIDE             */
+/* ================================ */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Iconos del lado derecho */
+.header-icon {
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ededed;
+}
+
+.header-icon mat-icon {
+  font-size: 24px;
+}
+
+/* Badges */
+.header-icon .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ff3b30;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+/* ================================ */
+/*        PERFIL DEL USUARIO       */
+/* ================================ */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.profile img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.profile-name {
+  font-size: 14px;
+  font-weight: 500;
+  color :#ededed
+}
+
+/* ================================ */
+/*          RESPONSIVE (MOVIL)     */
+/* ================================ */
+@media (max-width: 768px) {
+  .header-title {
+    display: none;
+  }
+
+  .header-right {
+    gap: 12px;
+  }
+
+  .profile-name {
+    display: none;
+  }
+}
+.profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #ffffff;
+}
+.logout-btn {
+  background-color: #ededef !important; /* MORADO DEL HEADER */
+  color: rgb(6, 2, 2) !important;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logout-btn mat-icon {
+  color: rgb(10, 10, 10) !important;
+}
+
+.logout-btn:hover {
+  background-color: #707070 !important; /* más oscuro al pasar el mouse */
+}

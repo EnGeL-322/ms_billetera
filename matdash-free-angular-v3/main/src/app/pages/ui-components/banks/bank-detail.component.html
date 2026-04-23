@@ -1,0 +1,88 @@
+<mat-card class="bank-card">
+
+  <!-- ENCABEZADO DEL BANCO -->
+  <div class="bank-header">
+    <div class="bank-info">
+      <h2>{{ bank?.name }}</h2>
+
+      <div class="bank-icon-container">
+        <img [src]="getBankLogo(bank?.name)" class="bank-icon" alt="icono">
+      </div>
+
+      <h3 class="bank-balance">
+        Saldo disponible:
+        <span class="amount">PEN {{ bankBalance | number:'1.2-2' }}</span>
+      </h3>
+    </div>
+
+    <div class="actions">
+      <button mat-stroked-button color="primary" (click)="toggleAddForm()">
+        + Agregar dinero
+      </button>
+
+      <button mat-flat-button color="accent" (click)="toggleTransferForm()">
+        Transferir a Wallet
+      </button>
+    </div>
+  </div>
+
+  <!-- FORM AGREGAR -->
+  <div class="form-container" *ngIf="showAddForm">
+    <h4>Agregar dinero</h4>
+
+    <mat-form-field appearance="outline" class="input-full">
+      <mat-label>Monto</mat-label>
+      <input matInput type="number" [(ngModel)]="amount">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input-full">
+      <mat-label>Descripción</mat-label>
+      <input matInput [(ngModel)]="description">
+    </mat-form-field>
+
+    <div class="form-buttons">
+      <button mat-flat-button color="primary" (click)="submitIncome()">Guardar</button>
+      <button mat-button (click)="toggleAddForm()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- FORM TRANSFERIR -->
+  <div class="form-container" *ngIf="showTransferForm">
+    <h4>Transferir dinero a Wallet</h4>
+
+    <mat-form-field appearance="outline" class="input-full">
+      <mat-label>Monto a transferir</mat-label>
+      <input matInput type="number" [(ngModel)]="transferAmount">
+    </mat-form-field>
+
+    <div class="form-buttons">
+      <button mat-flat-button color="accent" (click)="submitTransfer()">Transferir</button>
+      <button mat-button (click)="toggleTransferForm()">Cancelar</button>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- HISTORIAL DE OPERACIONES -->
+  <h3 class="history-title">Historial de movimientos</h3>
+
+  <div class="history-list" *ngIf="incomes.length > 0">
+    <div *ngFor="let item of incomes" class="history-item"
+         [ngClass]="{ 'positive': item.amount > 0, 'negative': item.amount < 0 }">
+
+      <div class="info">
+        <p class="description">{{ item.description }}</p>
+        <p class="date">{{ item.createdAt | date:'medium' }}</p>
+      </div>
+
+      <div class="amount"
+           [ngClass]="{ 'positive': item.amount > 0, 'negative': item.amount < 0 }">
+
+        {{ item.amount > 0 ? '+' : '' }}PEN {{ item.amount | number:'1.2-2' }}
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="incomes.length === 0" class="empty">No hay movimientos aún.</p>
+
+</mat-card>

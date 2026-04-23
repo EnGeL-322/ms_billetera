@@ -1,0 +1,20 @@
+server:
+  port: 7010
+
+spring:
+  application:
+    name: ms-config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/SOCIAbel/PROYECTO_FINAL_GA.git
+          searchPaths:
+            - config-data
+          default-label: main
+
+  security:
+    user:
+      name: root
+      password: 123456

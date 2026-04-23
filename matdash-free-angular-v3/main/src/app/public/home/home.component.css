@@ -1,0 +1,159 @@
+/* FUENTE MODERNA */
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+/* WRAPPER GENERAL */
+.hero-wrapper {
+  background: radial-gradient(circle at top right, #6c63ff 0%, #3f3d56 40%, #1b1b2f 100%);
+  color: white;
+  padding-bottom: 60px;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 60px;
+  align-items: center;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.logo span {
+  color: #ffcb2b;
+}
+
+/* HERO SECTION */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  padding: 90px 60px;
+  align-items: center;
+}
+
+.hero-text {
+  max-width: 480px;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.hero-text h1 span {
+  color: #ffcb2b;
+}
+
+.hero-text p {
+  margin: 20px 0;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.cta {
+  padding: 12px 30px;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+/* HERO IMG */
+.hero-img img {
+  width: 430px;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+}
+
+
+/* SECCIÓN DE BENEFICIOS */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 50px 20px;
+  background: #f7f9fc;
+}
+
+.feature-card {
+  background: white;
+  width: 260px;
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.07);
+}
+
+.feature-card .icon {
+  font-size: 40px;
+}
+
+.feature-card h3 {
+  margin-top: 15px;
+  font-weight: 700;
+}
+
+.feature-card p {
+  margin-top: 10px;
+  color: #555;
+}
+
+
+/* CTA FINAL */
+.cta-final {
+  padding: 60px 20px;
+  text-align: center;
+  background: #eef0f7;
+}
+
+.cta-final h2 {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.btn-big {
+  margin-top: 20px;
+  padding: 15px 40px;
+  font-size: 20px;
+}
+
+
+/* FOOTER */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #1b1b2f;
+  color: #ccc;
+  font-size: 14px;
+}
+
+
+/* ANIMACIONES */
+.animate-fade {
+  animation: fade 1.2s ease forwards;
+}
+
+@keyframes fade {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.animate-slide {
+  animation: slide 1.3s ease forwards;
+}
+
+@keyframes slide {
+  from {opacity: 0; transform: translateX(40px);}
+  to {opacity: 1; transform: translateX(0);}
+}
+
+.animate-up {
+  animation: up 1.2s ease forwards;
+}
+
+@keyframes up {
+  from {opacity: 0; transform: translateY(40px);}
+  to {opacity: 1; transform: translateY(0);}
+}

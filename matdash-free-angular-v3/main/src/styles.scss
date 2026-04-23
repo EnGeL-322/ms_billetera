@@ -1,0 +1,176 @@
+/* ================================ */
+/*       ESTILOS GLOBALES           */
+/* ================================ */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* ================================ */
+/*   QUITAR ESPACIADO SUPERIOR      */
+/* ================================ */
+
+.body-wrapper,
+.pageWrapper,
+.maxWidth,
+mat-sidenav-content.contentWrapper,
+.mainWrapper {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* ================================ */
+/*   HEADER FINTECH PREMIUM         */
+/* ================================ */
+
+app-header {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #673de6 !important;
+}
+
+/* ================================ */
+/*   FONDO GENERAL DEL SISTEMA      */
+/* ================================ */
+
+.contentWrapper {
+  background: linear-gradient(to bottom, #faf7ff, #f7f9ff);
+}
+
+/* ================================ */
+/*   SIDEBAR FINTECH PREMIUM        */
+/* ================================ */
+
+.sidebarNav {
+  background-color: #673de6 !important;
+  padding: 20px 10px;
+  filter: drop-shadow(2px 0 6px rgba(0,0,0,0.10));
+}
+
+/* BOTONES DEL SIDEBAR */
+.sidebarNav .menu-list-item {
+  background: #F5F0FF !important; /* Ultra claro */
+  color: #3d3d3d !important;
+  border-radius: 14px !important;
+  margin: 6px 0 !important;
+  transition: all 0.25s ease !important;
+  font-weight: 500;
+}
+
+/* ÍCONO NORMAL */
+.sidebarNav .menu-list-item .routeIcon {
+  color: #5c5c5c !important;
+}
+
+/* HOVER */
+.sidebarNav .menu-list-item:hover {
+  background: #E6DAFF !important;
+  color: #000 !important;
+}
+
+.sidebarNav .menu-list-item:hover .routeIcon {
+  color: #000 !important;
+}
+
+/* ACTIVO */
+.sidebarNav .menu-list-item.activeMenu {
+  background: #269db8 !important;
+  color: #ffffff !important;
+}
+
+.sidebarNav .menu-list-item.activeMenu .routeIcon {
+  color: #ffffff !important;
+}
+
+/* SUBMENÚ ABIERTO */
+.sidebarNav .menu-list-item.expanded {
+  background: #D6C7FF !important;
+}
+
+/* Animación general */
+.mat-list-item,
+a.mat-list-item {
+  transition: background 0.25s ease, transform 0.20s ease !important;
+}
+
+.mat-list-item:hover,
+a.mat-list-item:hover {
+  transform: translateX(2px);
+}
+
+/* ================================ */
+/*   TARJETAS Y COMPONENTES         */
+/* ================================ */
+
+/* Tarjetas estilo fintech */
+.wallet-card,
+.mat-card {
+  border-radius: 22px !important;
+  background: linear-gradient(135deg, #ffffff, #faf8ff) !important;
+  box-shadow:
+    0 3px 10px rgba(0,0,0,0.06),
+    0 7px 18px rgba(0,0,0,0.04) !important;
+  border: 1px solid #f1ebff !important;
+}
+
+/* ================================ */
+/*   BOTÓN FLOTANTE "+" PREMIUM     */
+/* ================================ */
+
+.add-button,
+.mat-fab {
+  background: #7F66FF !important;
+  box-shadow: 0 5px 16px rgba(127,102,255,0.45) !important;
+  transition: 0.2s ease !important;
+}
+
+.add-button:hover,
+.mat-fab:hover {
+  transform: scale(1.07);
+  box-shadow: 0 7px 20px rgba(127,102,255,0.55) !important;
+}
+
+/* ================================ */
+/*   CHIPS (Yape, etc.)             */
+/* ================================ */
+
+.bank-chip,
+.mat-chip {
+  background: #f4edff !important;
+  border: 1px solid #a08dff !important;
+  color: #7F66FF !important;
+  font-weight: 600 !important;
+  padding: 6px 16px !important;
+  border-radius: 12px !important;
+}
+
+/* ================================ */
+/*   BOTONES OUTLINE PREMIUM        */
+/* ================================ */
+
+.btn-outline,
+.mat-stroked-button {
+  border-radius: 12px !important;
+  border: 1.6px solid #7F66FF !important;
+  color: #6fd232 !important;
+  padding: 6px 16px !important;
+  transition: 0.2s ease !important;
+}
+
+.btn-outline:hover,
+.mat-stroked-button:hover {
+  background: #f0e8ff !important;
+}
+.bank-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: white;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}

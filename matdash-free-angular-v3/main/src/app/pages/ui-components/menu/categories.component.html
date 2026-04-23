@@ -1,0 +1,86 @@
+<div class="container">
+
+  <!-- TEMPLATE DEL MODAL -->
+  <ng-template #dialogTemplate>
+    <h2 mat-dialog-title>{{ editingId === null ? 'Nueva Categoría' : 'Editar Categoría' }}</h2>
+
+    <div mat-dialog-content>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="form.name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Ícono</mat-label>
+        <input matInput [(ngModel)]="form.icon" placeholder="shopping, food, home">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Color</mat-label>
+        <input matInput type="color" [(ngModel)]="form.color">
+      </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions align="end">
+      <button mat-button (click)="dialogRef.close()">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="saveCategory()">
+        {{ editingId === null ? 'Guardar' : 'Actualizar' }}
+      </button>
+    </div>
+  </ng-template>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h2>Categorías</h2>
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      + Agregar
+    </button>
+  </div>
+
+  <!-- TARJETAS DE CATEGORÍAS -->
+  <div class="cards-container">
+
+    <mat-card class="category-card" *ngFor="let c of categories">
+
+      <!-- CABECERA -->
+      <div class="card-header">
+        <h3>{{ c.name }}</h3>
+        <div class="color-preview" [style.background]="c.color"></div>
+      </div>
+
+      <!-- ICONO -->
+      <p class="icon-line">
+        <strong>Ícono:</strong> {{ c.icon }}
+      </p>
+
+      <!-- FECHA -->
+      <p class="date-line">
+        <strong>Creado:</strong> {{ c.createdAt | date:'short' }}
+      </p>
+
+      <!-- BOTONES -->
+      <div class="actions-row">
+
+        <button class="action sub" (click)="irASubcategorias(c.id)">
+          Subcategorías
+        </button>
+
+        <button class="action update" (click)="openEditDialog(c)">
+          Actualizar
+        </button>
+
+        <button class="action delete" (click)="deleteCategory(c.id)">
+          Eliminar
+        </button>
+
+      </div>
+
+    </mat-card>
+
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>

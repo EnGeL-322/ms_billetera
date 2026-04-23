@@ -1,0 +1,44 @@
+<div class="header-container">
+
+  <!-- LEFT -->
+  <div class="header-left">
+
+    <!-- Toggle mobile -->
+    <span class="toggle-button" (click)="onToggleMobileNav()">
+      <mat-icon>menu</mat-icon>
+    </span>
+
+
+    <div class="header-title">Billetera Digital</div>
+  </div>
+
+
+  <!-- RIGHT -->
+  <div class="header-right">
+
+    <!-- Toggle collapse sidebar -->
+    <div class="header-icon" (click)="onToggleCollapsed()" *ngIf="showToggle">
+      <mat-icon>view_sidebar</mat-icon>
+    </div>
+
+
+    <!-- Profile -->
+    <div class="profile">
+      <div class="profile-avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+
+      <span class="profile-name">{{ userName }}</span>
+
+
+    </div>
+
+    <!-- Logout -->
+    <button mat-button class="logout-btn" (click)="logout()">
+  <mat-icon>logout</mat-icon>
+  Cerrar sesión
+</button>
+
+  </div>
+
+</div>

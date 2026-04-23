@@ -1,0 +1,48 @@
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.btns {
+  display: flex;
+  gap: 10px;
+}
+
+.table {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+button.action.update {
+  background: #5e6cff;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button.action.update:hover {
+  background: #4b57e0;
+}
+
+button.action.delete {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button.action.delete:hover {
+  background: #e04444;
+}

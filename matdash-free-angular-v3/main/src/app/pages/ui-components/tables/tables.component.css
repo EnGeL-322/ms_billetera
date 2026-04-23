@@ -1,0 +1,72 @@
+.wallet-card {
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  background: #ffffff;
+}
+
+/* HEADER */
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subtitle {
+  margin-top: -4px;
+  color: #777;
+}
+
+/* RESUMEN DE WALLET */
+.wallet-summary {
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
+  padding: 20px;
+  background: #f7f9ff;
+  border-radius: 12px;
+  border: 1px solid #e3e7ff;
+}
+
+.wallet-icon {
+  font-size: 60px;
+  margin-right: 20px;
+}
+
+.wallet-info h1.balance {
+  margin: 4px 0;
+  color: #673ab7;
+  font-size: 34px;
+}
+
+.currency, .created {
+  color: #666;
+  margin: 2px 0;
+}
+
+/* BANCOS */
+.banks-title {
+  margin-top: 30px;
+}
+
+.banks-list {
+  margin: 12px 0 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bank-tag {
+  border-radius: 50px !important;
+}
+
+.no-banks {
+  color: #777;
+  font-style: italic;
+}
+
+/* BOTÓN ELIMINAR */
+.delete-container {
+  margin-top: 40px;
+  text-align: right;
+}

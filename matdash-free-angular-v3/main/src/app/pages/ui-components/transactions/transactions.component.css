@@ -1,0 +1,120 @@
+/* CARD GENERAL */
+.tx-card {
+  padding: 22px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 5px 22px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.tx-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.tx-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+}
+
+.btn-new mat-icon {
+  margin-right: 4px;
+}
+
+/* TABLA */
+.table-container {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+}
+
+.tx-table {
+  width: 100%;
+  border-spacing: 0;
+  background: #fff;
+}
+
+/* HEADER CELLS */
+.tx-table th {
+  background: #f8f8f8;
+  font-weight: 600;
+  color: #444;
+  padding: 14px;
+  font-size: 14px;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+/* FILAS */
+.tx-row td {
+  padding: 14px;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.tx-row:hover {
+  background: #f9f9ff;
+  transition: 0.2s ease;
+}
+
+/* TEXTO */
+.txt {
+  font-weight: 500;
+}
+
+.txt-light {
+  color: #555;
+}
+
+.txt-grey {
+  color: #999;
+}
+
+/* BADGES */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-income {
+  background: #d6f5d6;
+  color: #148a1e;
+}
+
+.badge-expense {
+  background: #ffd6d6;
+  color: #c62828;
+}
+
+/* MONTOS */
+.amount {
+  font-weight: 700;
+}
+
+.amount-income {
+  color: #0e8a25;
+}
+
+.amount-expense {
+  color: #d82424;
+}
+
+/* FECHA */
+.cell-date {
+  font-weight: 500;
+  color: #555;
+}
+
+/* VACÍO */
+.empty-text {
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  font-size: 15px;
+}

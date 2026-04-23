@@ -1,0 +1,76 @@
+/* === CONTENEDOR GENERAL === */
+.blank-layout-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f3f4f8; /* Gris suave limpio */
+}
+
+/* === TARJETA PRINCIPAL DEL LOGIN (efecto sobresalido + glass) === */
+.boxed-auth {
+  width: 100%;
+  border-radius: 18px !important;
+  padding: 32px !important;
+
+  /* ✨ EFECTO GLASS + SOMBRA PROFESIONAL ✨ */
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px);
+  box-shadow:
+      0 10px 25px rgba(0,0,0,0.08),
+      0 4px 12px rgba(0,0,0,0.06),
+      0 0 0 1px rgba(255,255,255,0.4) inset;
+}
+
+/* ——— TITULO ——— */
+.boxed-auth h2 {
+  font-weight: 700;
+  color: #222;
+}
+
+.boxed-auth p {
+  color: #666 !important;
+}
+
+/* === Inputs Material === */
+.mat-mdc-form-field {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 10px !important;
+}
+
+.mdc-text-field--outlined .mdc-notched-outline__leading,
+.mdc-text-field--outlined .mdc-notched-outline__trailing,
+.mdc-text-field--outlined .mdc-notched-outline__notch {
+  border-color: #d0d0d0 !important;
+}
+
+.mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: #5A54F1 !important;
+}
+
+/* CHECKBOX + LINKS */
+.mat-mdc-checkbox .mdc-form-field {
+  color: #444;
+}
+
+a {
+  font-weight: 600 !important;
+}
+
+/* BOTÓN LOGIN */
+button[mat-flat-button] {
+  height: 44px;
+  font-size: 15px;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #0052ff, #2e7bff) !important;
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: 0.2s ease-in-out;
+}
+
+button[mat-flat-button]:hover {
+  filter: brightness(1.08);
+}

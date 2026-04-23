@@ -1,0 +1,113 @@
+/* === CONTENEDOR GENERAL === */
+.blank-layout-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f3f4f8; /* gris suave */
+}
+
+/* === TARJETA PRINCIPAL (GLASS CARD) === */
+.boxed-auth {
+  width: 100%;
+  border-radius: 18px !important;
+  padding: 32px !important;
+
+  /* Efecto glass premium */
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px);
+  box-shadow:
+      0 10px 25px rgba(0,0,0,0.08),
+      0 4px 12px rgba(0,0,0,0.06),
+      0 0 0 1px rgba(255,255,255,0.4) inset;
+}
+
+/* Títulos */
+.boxed-auth h2 {
+  font-weight: 700;
+  color: #222;
+}
+
+.boxed-auth p {
+  color: #666 !important;
+}
+
+/* --- GOOGLE & FACEBOOK BUTTONS --- */
+.custom-row button {
+  height: 42px;
+  border-radius: 10px !important;
+  border-color: #dcdcdc !important;
+  background: white !important;
+  transition: 0.2s ease-in-out;
+}
+
+.custom-row button:hover {
+  border-color: #5A54F1 !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* “OR” DIVIDER */
+.or-border {
+  text-align: center;
+  font-weight: 600;
+  color: #666;
+  position: relative;
+}
+
+.or-border::before,
+.or-border::after {
+  content: "";
+  width: 42%;
+  height: 1px;
+  background: #ddd;
+  position: absolute;
+  top: 50%;
+}
+
+.or-border::before {
+  left: 0;
+}
+
+.or-border::after {
+  right: 0;
+}
+
+/* === INPUTS MATERIAL === */
+.mat-mdc-form-field {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 10px !important;
+}
+
+.mdc-text-field--outlined .mdc-notched-outline__leading,
+.mdc-text-field--outlined .mdc-notched-outline__trailing,
+.mdc-text-field--outlined .mdc-notched-outline__notch {
+  border-color: #d0d0d0 !important;
+}
+
+.mat-mdc-form-field:hover .mdc-notched-outline__leading,
+.mat-mdc-form-field:hover .mdc-notched-outline__notch,
+.mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: #5A54F1 !important;
+}
+
+/* ERROR TEXT */
+.text-danger {
+  font-size: 12px;
+  color: #d9534f !important;
+}
+
+/* SUBMIT BUTTON */
+button[mat-flat-button] {
+  height: 44px;
+  font-size: 15px;
+  border-radius: 10px !important;
+  background: linear-gradient(90deg, #0052ff, #2e7bff) !important;
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: 0.2s ease-in-out;
+}
+
+button[mat-flat-button]:hover {
+  filter: brightness(1.08);
+}

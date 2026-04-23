@@ -1,0 +1,76 @@
+<h2 mat-dialog-title class="dialog-title">Nueva Transacción</h2>
+
+<mat-dialog-content class="dialog-body">
+  <form [formGroup]="txForm">
+
+    <!-- Tipo -->
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="INCOME">Ingreso</mat-option>
+        <mat-option value="EXPENSE">Gasto</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Categoría -->
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Categoría</mat-label>
+      <mat-select formControlName="categoryId">
+        <mat-option *ngFor="let c of categories" [value]="c.id">
+          {{ c.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Subcategoría -->
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Subcategoría</mat-label>
+      <mat-select formControlName="subcategoryId">
+        <mat-option *ngFor="let s of subcategories" [value]="s.id">
+          {{ s.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Meta -->
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Meta (Opcional)</mat-label>
+      <mat-select formControlName="goalId">
+        <mat-option [value]="null">Sin meta</mat-option>
+        <mat-option *ngFor="let g of goals" [value]="g.id">
+          {{ g.name }} — {{ g.currentAmount }}/{{ g.targetAmount }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Evento -->
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Evento (Opcional)</mat-label>
+      <input matInput type="number" formControlName="eventId">
+    </mat-form-field>
+
+    <!-- Monto -->
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Monto</mat-label>
+      <input matInput type="number" formControlName="amount">
+    </mat-form-field>
+
+    <!-- Descripción -->
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button class="cancel-btn" (click)="onCancel()">
+    Cancelar
+  </button>
+
+  <button mat-raised-button color="primary" class="save-btn"
+          (click)="onSubmit()" [disabled]="txForm.invalid">
+    Guardar
+  </button>
+</mat-dialog-actions>

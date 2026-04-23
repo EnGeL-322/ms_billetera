@@ -1,0 +1,124 @@
+/* =============================== */
+/* CONTENEDOR GENERAL             */
+/* =============================== */
+
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* =============================== */
+/* TARJETAS DE CATEGORÍAS         */
+/* =============================== */
+
+.cards-container {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.12);
+  transition: 0.25s ease;
+  background: #ffffff;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.18);
+}
+
+/* HEADER DE CADA TARJETA */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.color-preview {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+/* INFORMACIÓN */
+.icon-line,
+.date-line {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* =============================== */
+/* BOTONES DE ACCIÓN              */
+/* =============================== */
+
+.actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+button.action {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+/* SUBCATEGORÍAS */
+button.action.sub {
+  background: #009688;
+  color: white;
+}
+
+button.action.sub:hover {
+  background: #00796b;
+  transform: translateY(-2px);
+}
+
+/* ACTUALIZAR */
+button.action.update {
+  background: #5e6cff;
+  color: white;
+}
+
+button.action.update:hover {
+  background: #4b57e0;
+  transform: translateY(-2px);
+}
+
+/* ELIMINAR */
+button.action.delete {
+  background: #ff4d4d;
+  color: white;
+}
+
+button.action.delete:hover {
+  background: #e04444;
+  transform: translateY(-2px);
+}

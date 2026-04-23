@@ -1,0 +1,91 @@
+<div class="blank-layout-container justify-content-center align-items-center bg-light">
+  <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">
+    <div class="col-lg-4 d-flex align-items-center">
+      <mat-card class="cardWithShadow boxed-auth">
+        <mat-card-content class="p-32">
+          
+          <div class="row m-t-24 custom-row">
+            <div class="col-6">
+              <button mat-stroked-button class="w-100">
+                <div class="d-flex align-items-center">
+                  <img src="/assets/images/svgs/google-icon.svg" alt="google" width="16" class="m-r-8" />
+                  <span class="d-none d-lg-block">Sign in with Google</span>
+                </div>
+              </button>
+            </div>
+            <div class="col-6">
+              <button mat-stroked-button class="w-100 d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <img src="/assets/images/svgs/facebook-icon.svg" alt="facebook" width="40" class="m-r-4" />
+                  <span class="d-none d-lg-block">Sign in with FB</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="or-border m-t-30">or sign up with</div>
+
+          <!-- FORMULARIO REAL -->
+          <form class="m-t-30" [formGroup]="form" (ngSubmit)="submit()">
+
+            <!-- NAME -->
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Name</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput formControlName="uname" />
+            </mat-form-field>
+            <div *ngIf="f.uname.touched && f.uname.invalid" class="text-danger m-b-8">
+              <small *ngIf="f.uname.errors?.['required']">El nombre es obligatorio.</small>
+              <small *ngIf="f.uname.errors?.['minlength']">Mínimo 3 caracteres.</small>
+            </div>
+
+            <!-- EMAIL -->
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Email Address</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput type="email" formControlName="email" />
+            </mat-form-field>
+            <div *ngIf="f.email.touched && f.email.invalid" class="text-danger m-b-8">
+              <small *ngIf="f.email.errors?.['required']">El email es obligatorio.</small>
+              <small *ngIf="f.email.errors?.['email']">El formato de email no es válido.</small>
+            </div>
+
+            <!-- PASSWORD -->
+            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">Password</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+            <div *ngIf="f.password.touched && f.password.invalid" class="text-danger m-b-8">
+              <small *ngIf="f.password.errors?.['required']">La contraseña es obligatoria.</small>
+              <small *ngIf="f.password.errors?.['minlength']">Mínimo 6 caracteres.</small>
+            </div>
+
+            <!-- ERROR DE BACKEND -->
+            <div *ngIf="errorMessage" class="text-danger m-b-8">
+              {{ errorMessage }}
+            </div>
+
+            <!-- BOTÓN ENVIAR -->
+            <button
+              mat-flat-button
+              color="primary"
+              class="w-100"
+              type="submit"
+              [disabled]="form.invalid || loading"
+            >
+              <span *ngIf="!loading">Sign Up</span>
+              <span *ngIf="loading">Registrando...</span>
+            </button>
+          </form>
+
+          <span class="d-block f-w-500 text-center m-t-24">
+            Already have an Account?
+            <a
+              [routerLink]="['/authentication/login']"
+              class="text-decoration-none text-primary f-w-500 f-s-14">
+              Sign In
+            </a>
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

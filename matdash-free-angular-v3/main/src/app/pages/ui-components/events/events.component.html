@@ -1,0 +1,106 @@
+<div class="container">
+
+  <!-- 🔥 TEMPLATE DEL MODAL (SIEMPRE ARRIBA DEL CONTENIDO) -->
+  <ng-template #dialogTemplate>
+    <div class="dialog-container">
+
+      <h2 class="dialog-title">
+        {{ editingId === null ? 'Nuevo Evento' : 'Editar Evento' }}
+      </h2>
+
+      <div class="dialog-body">
+
+        <mat-form-field appearance="fill" class="field">
+          <mat-label>Nombre del Evento</mat-label>
+          <input matInput [(ngModel)]="form.name">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="field">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput rows="3" [(ngModel)]="form.description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="field">
+          <mat-label>Presupuesto</mat-label>
+          <input matInput type="number" [(ngModel)]="form.budget">
+        </mat-form-field>
+
+        <div class="date-row">
+
+          <mat-form-field appearance="fill" class="field">
+            <mat-label>Fecha Inicio</mat-label>
+            <input matInput [matDatepicker]="dp1" [(ngModel)]="form.startDate">
+            <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+            <mat-datepicker #dp1></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="field">
+            <mat-label>Fecha Fin</mat-label>
+            <input matInput [matDatepicker]="dp2" [(ngModel)]="form.endDate">
+            <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+            <mat-datepicker #dp2></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+
+      </div>
+
+      <div class="dialog-actions">
+        <button mat-button (click)="dialogRef.close()">Cancelar</button>
+        <button mat-flat-button color="primary" (click)="saveEvent()">
+          {{ editingId === null ? 'Guardar' : 'Actualizar' }}
+        </button>
+      </div>
+
+    </div>
+  </ng-template>
+
+
+  <!-- 🔥 HEADER -->
+  <div class="header">
+    <h2>Eventos</h2>
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      + Agregar Evento
+    </button>
+  </div>
+
+
+  <!-- 🔥 TARJETAS DE EVENTOS (AQUÍ ESTABA EL PROBLEMA: ESTABA BORRADO) -->
+  <div class="cards-container">
+    
+    <mat-card class="event-card" *ngFor="let e of events">
+
+      <div class="card-header">
+        <h3>{{ e.name }}</h3>
+        <span class="budget">S/ {{ e.budget }}</span>
+      </div>
+
+      <p class="description">{{ e.description || 'Sin descripción' }}</p>
+
+      <div class="card-dates">
+        <div>
+          <label>Inicio:</label>
+          <span>{{ e.startDate }}</span>
+        </div>
+        <div>
+          <label>Fin:</label>
+          <span>{{ e.endDate }}</span>
+        </div>
+      </div>
+
+      <div class="spent-info">
+        <label>Gastado:</label>
+        <strong>S/ {{ e.spent }}</strong>
+      </div>
+
+      <div class="actions-row">
+        <button class="action sub" (click)="addSpent(e)">+ Gasto</button>
+        <button class="action update" (click)="openEditDialog(e)">Editar</button>
+        <button class="action delete" (click)="deleteEvent(e.id)">Eliminar</button>
+      </div>
+
+    </mat-card>
+
+  </div>
+
+</div>

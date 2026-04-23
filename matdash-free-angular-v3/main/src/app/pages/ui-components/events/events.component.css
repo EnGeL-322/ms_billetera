@@ -1,0 +1,237 @@
+/* ---------------------- */
+/* CONTENEDOR PRINCIPAL   */
+/* ---------------------- */
+
+.container {
+  width: 95%;
+  margin: 20px auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* ---------------------- */
+/* TARJETAS DE EVENTOS    */
+/* ---------------------- */
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
+}
+
+.event-card {
+  padding: 18px 20px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.12);
+  transition: 0.25s ease;
+  background: white;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 14px rgba(0,0,0,0.18);
+}
+
+/* HEADER DE CADA TARJETA */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+.budget {
+  padding: 4px 8px;
+  background: #e3f2fd;
+  color: #1976d2;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+/* DESCRIPCIÓN */
+.description {
+  margin: 10px 0;
+  color: #555;
+  font-size: 14px;
+  min-height: 40px;
+}
+
+/* FECHAS */
+.card-dates {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card-dates label {
+  font-weight: 600;
+  color: #444;
+  font-size: 13px;
+}
+
+.card-dates span {
+  color: #555;
+  font-size: 13px;
+}
+
+/* GASTADO */
+.spent-info {
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+
+.spent-info label {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* ---------------------- */
+/* BOTONES DE ACCIÓN      */
+/* ---------------------- */
+
+.actions-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* BOTONES */
+.action {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s ease;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
+  flex: 1;
+  text-align: center;
+}
+
+/* + Gasto */
+.action.sub {
+  background: #2196F3;
+  color: white;
+}
+.action.sub:hover {
+  background: #1976D2;
+  transform: translateY(-2px);
+}
+
+/* Editar */
+.action.update {
+  background: #FFC107;
+  color: #4a3f00;
+}
+.action.update:hover {
+  background: #FFA000;
+  transform: translateY(-2px);
+}
+
+/* Eliminar */
+.action.delete {
+  background: #DC3545;
+  color: white;
+}
+.action.delete:hover {
+  background: #B52A37;
+  transform: translateY(-2px);
+}
+/* ============================== */
+/* 💜  SOLO FORMULARIO DEL MODAL  */
+/* ============================== */
+
+.dialog-container {
+  background: #ffffff;
+  padding: 26px;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 680px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.dialog-title {
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 18px;
+  color: #4c2deb;
+}
+
+/* Campos */
+.field {
+  width: 100%;
+  margin-bottom: 16px !important;
+}
+
+/* Material morado claro */
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background: #f5f0ff !important; /* Morado ultra claro */
+  border-radius: 14px !important;
+  padding: 6px 12px !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-flex {
+  background: #ece2ff !important;
+}
+
+.mat-input-element {
+  color: #333 !important;
+  font-weight: 500 !important;
+}
+
+textarea.mat-input-element {
+  resize: none;
+}
+
+/* Fila de fechas */
+.date-row {
+  display: flex;
+  gap: 18px;
+}
+
+.date-row .field {
+  flex: 1;
+}
+
+/* Botones */
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dialog-actions button {
+  font-weight: 600;
+  border-radius: 10px !important;
+}
+
+/* Guardar */
+.dialog-actions button.mat-flat-button {
+  background: #4c2deb !important;
+  color: white !important;
+  padding: 8px 22px !important;
+  box-shadow: 0 4px 14px rgba(76,45,235,0.4);
+}
+
+.dialog-actions button.mat-flat-button:hover {
+  background: #3a21c9 !important;
+}
+
+/* Cancelar */
+.dialog-actions button.mat-button {
+  color: #4c2deb !important;
+}
+

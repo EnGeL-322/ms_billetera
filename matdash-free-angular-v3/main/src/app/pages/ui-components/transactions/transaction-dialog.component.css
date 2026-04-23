@@ -1,0 +1,62 @@
+/* ---------- DISEÑO GENERAL DEL DIALOG ---------- */
+.dialog-title {
+  font-size: 22px;
+  font-weight: 700;
+  padding-bottom: 4px;
+  color: #333;
+}
+
+.dialog-body {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- INPUTS PREMIUM ---------- */
+.input-field {
+  width: 100%;
+}
+
+.input-field .mat-form-field-outline {
+  border-radius: 12px !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: #6c63ff !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #6c63ff !important;
+}
+
+/* ---------- BOTONES ---------- */
+.dialog-actions {
+  margin-top: 15px;
+  padding: 12px 4px;
+}
+
+.cancel-btn {
+  font-weight: 600;
+  color: #777 !important;
+  transition: 0.2s;
+}
+
+.cancel-btn:hover {
+  color: #000 !important;
+}
+
+.save-btn {
+  padding: 8px 20px !important;
+  border-radius: 10px !important;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* ---------- DIALOG BOX ---------- */
+.mat-dialog-container {
+  border-radius: 20px !important;
+  padding: 25px !important;
+  box-shadow: 0 10px 50px rgba(0,0,0,0.25) !important;
+  background: #ffffff !important;
+}

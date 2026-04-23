@@ -1,0 +1,93 @@
+<mat-card class="tx-card">
+
+  <mat-card-content>
+
+    <!-- HEADER -->
+    <div class="tx-header">
+      <h3>Transacciones</h3>
+
+      <button mat-raised-button color="primary" class="btn-new" (click)="openNewTransactionDialog()">
+        <mat-icon>add</mat-icon>
+        Nueva Transacción
+      </button>
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-container" *ngIf="transactions.length > 0; else empty">
+
+      <table mat-table [dataSource]="transactions" class="tx-table">
+
+        <!-- Fecha -->
+        <ng-container matColumnDef="transactionDate">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let tx">
+            <div class="cell-date">{{ tx.transactionDate | date:'short' }}</div>
+          </td>
+        </ng-container>
+
+        <!-- Tipo -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let tx">
+            <span class="badge" [ngClass]="tx.type === 'INCOME' ? 'badge-income' : 'badge-expense'">
+              {{ tx.type === 'INCOME' ? 'Ingreso' : 'Gasto' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Categoría -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Categoría</th>
+          <td mat-cell *matCellDef="let tx">
+            <span class="txt">{{ tx.category?.name }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Subcategoría -->
+        <ng-container matColumnDef="subcategory">
+          <th mat-header-cell *matHeaderCellDef>Subcategoría</th>
+          <td mat-cell *matCellDef="let tx">
+            <span class="txt txt-light">{{ tx.subcategory?.name }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Monto -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Monto</th>
+          <td mat-cell *matCellDef="let tx">
+            <span class="amount" [ngClass]="tx.type === 'INCOME' ? 'amount-income' : 'amount-expense'">
+              PEN {{ tx.amount | number:'1.2-2' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Evento -->
+        <ng-container matColumnDef="event">
+          <th mat-header-cell *matHeaderCellDef>Evento</th>
+          <td mat-cell *matCellDef="let tx">
+            <span class="txt txt-grey">{{ tx.event?.name || '-' }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Descripción -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Descripción</th>
+          <td mat-cell *matCellDef="let tx">
+            {{ tx.description }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="tx-row"></tr>
+
+      </table>
+
+    </div>
+
+    <!-- VACÍO -->
+    <ng-template #empty>
+      <p class="empty-text">No hay transacciones registradas aún.</p>
+    </ng-template>
+
+  </mat-card-content>
+</mat-card>
