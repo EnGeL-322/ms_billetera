@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TransactionService, TransactionType } from '../../../providers/services/transaction/transaction.service';
 import { CategoryService } from 'src/app/providers/services/category/category.service';
 import { GoalsService } from 'src/app/providers/services/goals/GoalsService';
+import { WalletService, Wallet } from 'src/app/providers/services/wallet/wallet.service';
 
 @Component({
   selector: 'app-transaction-dialog',
@@ -31,7 +32,8 @@ export class TransactionDialogComponent implements OnInit {
 
   categories: any[] = [];
   subcategories: any[] = [];
-  goals: any[] = [];  // 👈 metas cargadas
+  goals: any[] = [];
+  wallet?: Wallet;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { userId: number },
@@ -39,13 +41,14 @@ export class TransactionDialogComponent implements OnInit {
     private txService: TransactionService,
     private categoryService: CategoryService,
     private goalsService: GoalsService,
+    private walletService: WalletService,
     private dialogRef: MatDialogRef<TransactionDialogComponent>
   ) {
     this.txForm = this.fb.group({
       type: ['EXPENSE' as TransactionType, Validators.required],
       categoryId: [null, Validators.required],
       subcategoryId: [null, Validators.required],
-      goalId: [null],   // 👈 nuevo
+      goalId: [null],
       eventId: [null],
       amount: [null, [Validators.required, Validators.min(0.01)]],
       description: ['', Validators.required],
@@ -53,18 +56,19 @@ export class TransactionDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // cargar categorías del usuario
     this.categoryService.getCategoriesByUser$(this.data.userId).subscribe(res => {
       this.categories = res;
     });
 
-    // cargar metas del usuario
     this.goalsService.getGoalsByUser$(this.data.userId).subscribe(res => {
       this.goals = res;
     });
 
-    // subcategorías al cambiar categoría
+    this.walletService.getWalletByUserId$(this.data.userId).subscribe({
+      next: (wallet) => this.wallet = wallet,
+      error: () => this.wallet = undefined
+    });
+
     this.txForm.get('categoryId')?.valueChanges.subscribe(categoryId => {
       if (categoryId) {
         this.categoryService.getSubcategories$(categoryId).subscribe(res => {
@@ -80,15 +84,26 @@ export class TransactionDialogComponent implements OnInit {
     if (this.txForm.invalid) return;
 
     const f = this.txForm.value;
+    const amount = Number(f.amount);
+
+    if (amount <= 0 || isNaN(amount)) {
+      alert('❌ El monto debe ser mayor a 0');
+      return;
+    }
+
+    if (f.type === TransactionType.EXPENSE && this.wallet && amount > this.wallet.balance) {
+      alert('❌ No tienes saldo suficiente en la billetera');
+      return;
+    }
 
     const payload = {
       userId: this.data.userId,
       categoryId: Number(f.categoryId),
       subcategoryId: Number(f.subcategoryId),
-      goalId: f.goalId ? Number(f.goalId) : null,     // 👈 enviar goalId
+      goalId: f.goalId ? Number(f.goalId) : null,
       eventId: f.eventId ? Number(f.eventId) : null,
       type: f.type,
-      amount: Number(f.amount),
+      amount,
       description: f.description
     };
 
@@ -99,7 +114,8 @@ export class TransactionDialogComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al crear transacción:', err);
-        alert('❌ Error al crear transacción');
+        const msg = err?.error?.message || err?.error || '❌ Error al crear transacción';
+        alert(msg);
       }
     });
   }

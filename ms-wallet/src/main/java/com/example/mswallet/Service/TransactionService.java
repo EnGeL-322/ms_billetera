@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,21 +45,24 @@ public class TransactionService {
         this.goalClient = goalClient;
     }
 
-    // =====================================================================
-    // CREATE
-    // =====================================================================
     @Transactional
     public TransactionResponseDTO createTransaction(TransactionRequestDTO request) {
 
-        // ------------------------------
-        // 1. Validar Wallet del usuario
-        // ------------------------------
+        if (request.getUserId() == null) {
+            throw new IllegalArgumentException("El userId es obligatorio");
+        }
+
+        if (request.getType() == null) {
+            throw new IllegalArgumentException("El tipo de transacción es obligatorio");
+        }
+
+        if (request.getAmount() == null || request.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("El monto debe ser mayor a 0");
+        }
+
         Wallet wallet = walletRepository.findByUserId(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Wallet no encontrada"));
 
-        // ------------------------------
-        // 2. Obtener categoría por ID
-        // ------------------------------
         CategoryDTO category = null;
         SubcategoryDTO subcategory = null;
 
@@ -81,9 +85,6 @@ public class TransactionService {
             }
         }
 
-        // ------------------------------
-        // 3. Validar EVENTO opcional
-        // ------------------------------
         EventDTO event = null;
         if (request.getEventId() != null) {
             try {
@@ -93,9 +94,22 @@ public class TransactionService {
             }
         }
 
-        // ------------------------------
-        // 4. Crear transacción
-        // ------------------------------
+        // ✅ VALIDAR FONDOS ANTES DE DESCONTAR
+        if (request.getType() == Transaction.TransactionType.EXPENSE &&
+                wallet.getBalance().compareTo(request.getAmount()) < 0) {
+            throw new IllegalStateException("Fondos insuficientes en la billetera");
+        }
+
+        // ✅ ACTUALIZAR BALANCE
+        if (request.getType() == Transaction.TransactionType.INCOME) {
+            wallet.setBalance(wallet.getBalance().add(request.getAmount()));
+        } else {
+            wallet.setBalance(wallet.getBalance().subtract(request.getAmount()));
+        }
+
+        walletRepository.save(wallet);
+
+        // ✅ RECIÉN DESPUÉS REGISTRAR LA TRANSACCIÓN
         Transaction transaction = new Transaction();
         transaction.setWalletId(wallet.getId());
         transaction.setUserId(request.getUserId());
@@ -109,23 +123,8 @@ public class TransactionService {
 
         transaction = transactionRepository.save(transaction);
 
-        // ------------------------------
-        // 5. Actualizar balance
-        // ------------------------------
-        if (request.getType() == Transaction.TransactionType.INCOME) {
-            wallet.setBalance(wallet.getBalance().add(request.getAmount()));
-        } else {
-            wallet.setBalance(wallet.getBalance().subtract(request.getAmount()));
-        }
-
-        walletRepository.save(wallet);
-
-        // ------------------------------
-        // 6. Aportar a meta (GOAL)
-        // ------------------------------
         if (request.getGoalId() != null &&
                 request.getType() == Transaction.TransactionType.EXPENSE) {
-
             try {
                 goalClient.updateGoalAmount(request.getGoalId(), request.getAmount());
                 log.info("✔ Meta {} actualizada con {}", request.getGoalId(), request.getAmount());
@@ -134,17 +133,10 @@ public class TransactionService {
             }
         }
 
-        // ------------------------------
-        // 7. Respuesta final
-        // ------------------------------
         return buildTransactionResponse(transaction, category, subcategory, event);
     }
 
-    // =====================================================================
-    // LISTAR TRANSACCIONES
-    // =====================================================================
     public List<TransactionResponseDTO> getUserTransactions(Long userId, LocalDate startDate, LocalDate endDate) {
-
         List<Transaction> transactions;
 
         if (startDate != null && endDate != null) {
@@ -160,9 +152,6 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
-    // =====================================================================
-    // ENRIQUECER TRANSACCIÓN (evitar errores)
-    // =====================================================================
     private TransactionResponseDTO enrichTransaction(Transaction tx) {
 
         CategoryDTO category = null;
@@ -193,9 +182,6 @@ public class TransactionService {
         return buildTransactionResponse(tx, category, subcategory, event);
     }
 
-    // =====================================================================
-    // ARMAR RESPUESTA FINAL
-    // =====================================================================
     private TransactionResponseDTO buildTransactionResponse(
             Transaction tx,
             CategoryDTO category,
@@ -215,13 +201,17 @@ public class TransactionService {
         dto.setTransactionDate(tx.getTransactionDate());
         return dto;
     }
+
     @Transactional
     public void registrarDesdeOperacion(TransactionToWalletDTO op) {
 
         Wallet wallet = walletRepository.findByUserId(op.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Wallet no encontrada"));
 
-        // Registrar transacción
+        if (op.getAmount() == null || op.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("El monto debe ser mayor a 0");
+        }
+
         Transaction tx = new Transaction();
         tx.setUserId(op.getUserId());
         tx.setWalletId(wallet.getId());
@@ -229,7 +219,7 @@ public class TransactionService {
         tx.setDescription(op.getDescription());
         tx.setTransactionDate(LocalDateTime.now());
 
-        if (op.getType().equals("INCOME")) {
+        if ("INCOME".equals(op.getType())) {
             tx.setType(Transaction.TransactionType.INCOME);
             wallet.setBalance(wallet.getBalance().add(op.getAmount()));
         } else {
@@ -238,11 +228,11 @@ public class TransactionService {
             if (wallet.getBalance().compareTo(op.getAmount()) < 0) {
                 throw new IllegalStateException("Fondos insuficientes en la billetera");
             }
+
             wallet.setBalance(wallet.getBalance().subtract(op.getAmount()));
         }
 
         walletRepository.save(wallet);
         transactionRepository.save(tx);
     }
-
 }

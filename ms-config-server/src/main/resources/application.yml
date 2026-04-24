@@ -9,7 +9,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/SOCIAbel/PROYECTO_FINAL_GA.git
+          uri: https://github.com/EnGeL-322/ms_billetera.git
           searchPaths:
             - config-data
           default-label: main

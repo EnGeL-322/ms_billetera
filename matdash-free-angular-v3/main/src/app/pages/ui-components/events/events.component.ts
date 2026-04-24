@@ -16,7 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Event } from 'src/app/providers/models/event.model';
 import { EventService } from 'src/app/providers/services/events/events.service';
 import { AuthService } from 'src/app/providers/services/auth/auth.service';
-import { WalletService } from 'src/app/providers/services/wallet/wallet.service';
+import { WalletService, Wallet } from 'src/app/providers/services/wallet/wallet.service';
 import { TransactionService } from 'src/app/providers/services/transaction/transaction.service';
 import { TransactionType } from '../../../providers/services/transaction/transaction.service';
 
@@ -39,15 +39,13 @@ import { TransactionType } from '../../../providers/services/transaction/transac
 })
 export class EventsComponent implements OnInit {
 
-  // 🔥 FIX AGREGADO: static: false + TemplateRef
   @ViewChild('dialogTemplate', { static: false }) dialogTemplate!: TemplateRef<any>;
 
   dialogRef!: MatDialogRef<any>;
-
   events: Event[] = [];
   editingId: number | null = null;
-
   userId!: number;
+  wallet?: Wallet;
 
   form = {
     name: '',
@@ -69,25 +67,27 @@ export class EventsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUserId();
+    this.loadWallet();
     this.loadEvents();
   }
 
-  // ============================================================
-  // 🔥 Obtener ID del usuario del token
-  // ============================================================
   loadUserId(): void {
     const token = this.authService.getToken();
     if (!token) return;
 
     const decoded: any = jwtDecode(token);
     this.userId = Number(decoded.id || decoded.sub);
-
-    console.log("USER ID DESDE TOKEN:", this.userId);
   }
 
-  // ============================================================
-  // 🔹 Cargar eventos
-  // ============================================================
+  loadWallet(): void {
+    if (!this.userId) return;
+
+    this.walletService.getWalletByUserId$(this.userId).subscribe({
+      next: (wallet) => this.wallet = wallet,
+      error: () => this.wallet = undefined
+    });
+  }
+
   loadEvents(): void {
     if (!this.userId) return;
 
@@ -96,10 +96,7 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  // 🟣 Abrir para CREAR
   openDialog(): void {
-
-    // 🔥 FIX: validar que el template ya existe
     if (!this.dialogTemplate) {
       console.error("dialogTemplate todavía no está listo");
       return;
@@ -107,21 +104,16 @@ export class EventsComponent implements OnInit {
 
     this.editingId = null;
     this.form = { name: '', description: '', budget: 0, startDate: '', endDate: '' };
-
     this.dialogRef = this.dialog.open(this.dialogTemplate);
   }
 
-  // 🟡 Abrir para EDITAR
   openEditDialog(event: Event): void {
-
-    // 🔥 FIX: evitar undefined → evita error ɵcmp
     if (!this.dialogTemplate) {
       console.error("dialogTemplate todavía no está listo");
       return;
     }
 
     this.editingId = event.id;
-
     this.form = {
       name: event.name,
       description: event.description,
@@ -133,7 +125,6 @@ export class EventsComponent implements OnInit {
     this.dialogRef = this.dialog.open(this.dialogTemplate);
   }
 
-  // 🟢 Guardar CREAR o EDITAR
   saveEvent(): void {
     const payload = {
       ...this.form,
@@ -147,7 +138,6 @@ export class EventsComponent implements OnInit {
           this.dialogRef.close();
         }
       });
-
     } else {
       this.eventService.updateEvent$(this.editingId, payload).subscribe({
         next: () => {
@@ -158,50 +148,61 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  // ============================================================
-  // ➕ AGREGAR GASTO (EVENTO → TRANSACCIÓN → BILLETERA)
-  // ============================================================
   addSpent(event: Event): void {
     const amount = prompt('Monto a agregar al gasto del evento:');
-
     if (!amount) return;
+
     const num = Number(amount);
-    if (isNaN(num)) return alert('Monto inválido');
 
-    this.eventService.updateSpent$(event.id, { eventId: event.id, amount: num })
-      .subscribe({
-        next: () => {
+    if (isNaN(num) || num <= 0) {
+      alert('Monto inválido');
+      return;
+    }
 
-          this.txService.createTransaction$({
-            userId: this.userId,
-            categoryId: null,
-            subcategoryId: null,
-            eventId: event.id,
-            type: TransactionType.EXPENSE,
-            amount: num,
-            description: 'Gasto agregado al evento'
-          }).subscribe({
-            next: () => console.log("Transacción creada correctamente"),
-            error: (err) => console.error("Error creando transacción:", err)
+    if (!this.wallet) {
+      alert('No se pudo obtener la billetera');
+      return;
+    }
+
+    if (num > this.wallet.balance) {
+      alert('❌ No tienes saldo suficiente en la billetera');
+      return;
+    }
+
+    // ✅ SOLO CREAR TRANSACCIÓN: ella misma ya descuenta la wallet
+    this.txService.createTransaction$({
+      userId: this.userId,
+      categoryId: null,
+      subcategoryId: null,
+      eventId: event.id,
+      type: TransactionType.EXPENSE,
+      amount: num,
+      description: 'Gasto agregado al evento'
+    }).subscribe({
+      next: () => {
+        // ✅ recién después actualizas el evento
+        this.eventService.updateSpent$(event.id, { eventId: event.id, amount: num })
+          .subscribe({
+            next: () => {
+              this.loadWallet();
+              this.loadEvents();
+              alert('✅ Gasto registrado correctamente');
+            },
+            error: (err) => {
+              console.error('Error actualizando spent del evento:', err);
+              this.loadWallet();
+              alert('⚠ La transacción se registró, pero el evento no se actualizó.');
+            }
           });
-
-          this.walletService.subtractFromWallet$(this.userId, num)
-            .subscribe({
-              next: () => {
-                this.loadEvents();
-                console.log("Gasto actualizado y billetera descontada correctamente");
-              },
-              error: (err) => {
-                console.error("Error actualizando billetera", err);
-                alert("El gasto se registró, pero NO se pudo actualizar la billetera.");
-              }
-            });
-
-        }
-      });
+      },
+      error: (err) => {
+        console.error('Error creando transacción:', err);
+        const msg = err?.error?.message || err?.error || '❌ No se pudo registrar el gasto';
+        alert(msg);
+      }
+    });
   }
 
-  // 🗑️ Eliminar evento
   deleteEvent(id: number): void {
     if (!confirm('¿Eliminar este evento?')) return;
 
